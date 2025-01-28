@@ -1,44 +1,47 @@
-import { Playfair_Display, Lato } from "next/font/google"
-import "./globals.css"
-
-const playfair = Playfair_Display({
-  subsets: ["latin"],
-  variable: "--font-playfair",
-  display: "swap",
-})
-
-const lato = Lato({
-  subsets: ["latin"],
-  weight: ["400", "700"],
-  variable: "--font-lato",
-  display: "swap",
-})
-
-export const metadata = {
-  title: "Evocative Artistry | Original Paintings by Jane Doe",
-  description:
-    "Discover the captivating world of Jane Doe's original paintings. Immerse yourself in vibrant colors and emotive brushstrokes that bring stories to life on canvas.",
-  keywords: "original paintings, contemporary art, Jane Doe, vibrant artwork, emotive paintings",
-  openGraph: {
-    title: "Evocative Artistry | Original Paintings by Jane Doe",
-    description:
-      "Discover the captivating world of Jane Doe's original paintings. Immerse yourself in vibrant colors and emotive brushstrokes that bring stories to life on canvas.",
-    images: [
-      {
-        url: "https://images.unsplash.com/photo-1579783901586-d88db74b4fe4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2340&q=80",
-        width: 2340,
-        height: 1560,
-        alt: "Jane Doe's Signature Painting",
-      },
-    ],
-    type: "website",
-  },
-}
+import Link from "next/link"
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={`${playfair.variable} ${lato.variable}`}>
-      <body className="font-sans bg-background text-foreground">{children}</body>
+    <html lang="en">
+      <body>
+        <header className="bg-white shadow-md">
+          <div className="container mx-auto px-4 py-6 flex justify-between items-center">
+            <Link href="/" className="text-2xl font-bold text-blue-600">
+              ArtHome
+            </Link>
+            <nav>
+              <ul className="flex space-x-6">
+                <li>
+                  <Link href="#" className="text-gray-600 hover:text-blue-600">
+                    Featured Work
+                  </Link>
+                </li>
+                <li>
+                  <Link href="#" className="text-gray-600 hover:text-blue-600">
+                    Services
+                  </Link>
+                </li>
+                <li>
+                  <Link href="#" className="text-gray-600 hover:text-blue-600">
+                    About Us
+                  </Link>
+                </li>
+                <li>
+                  <Link href="#" className="text-gray-600 hover:text-blue-600">
+                    Contact Us
+                  </Link>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </header>
+        <main>{children}</main>
+        <footer className="bg-gray-100 mt-12">
+          <div className="container mx-auto px-4 py-6 text-center text-gray-600">
+            © 2024 ArtHome. All rights reserved.
+          </div>
+        </footer>
+      </body>
     </html>
   )
 }
