@@ -1,6 +1,6 @@
-import HomePage from "./components/homepage"
+import Homepage from "./components/Homepage.js"
 
-export default function Home() {
-  return <HomePage />
+export default function Page() {
+  return <Homepage />
 }
 
