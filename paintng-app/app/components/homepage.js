@@ -1,105 +1,106 @@
-import Image from "next/image"
-import Link from "next/link"
-import { Menu, Search, ShoppingBag, User } from "lucide-react"
+"use client";
+
+import React, { useState, useEffect } from 'react';
+import Image from "next/image";
+import Link from "next/link";
+import { Menu, ShoppingCart, UserCircle } from 'lucide-react';
 
 export default function Homepage() {
+  const [activeImageIndex, setActiveImageIndex] = useState(0);
+  const [nextImageIndex, setNextImageIndex] = useState(1);
+
+  const images = [
+    { src: '/images/animal-3546613_1280.jpg', alt: "Animal", title: "Wildlife Wonders" },
+    { src: '/images/ai-generated-8578998_1280.png', alt: "AI Generated", title: "AI Artistry" },
+    { src: '/images/artist-3013762_1280.jpg', alt: "Artist", title: "Master Creators" }
+  ];
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveImageIndex((prevIndex) => (prevIndex + 1) % images.length);
+      setNextImageIndex((prevIndex) => (prevIndex + 1) % images.length);
+    }, 5000); // Reduced speed of animation
+
+    return () => clearInterval(interval);
+  }, [images.length]);
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-amber-50 via-yellow-50 to-orange-100">
+    <div className="min-h-screen bg-gray-50 flex items-center justify-center">
       {/* Navigation Bar */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-white bg-opacity-90 backdrop-blur-sm shadow-md">
-        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-          <Link href="/" className="text-2xl sm:text-3xl font-playfair font-bold text-amber-800">
-            ArtVista
-          </Link>
-          <div className="hidden md:flex space-x-4 lg:space-x-8">
-            <Link href="/gallery" className="text-amber-700 hover:text-amber-900 font-sans transition duration-300">
-              Gallery
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-white shadow-md">
+        <div className="container mx-auto px-6 py-4">
+          <div className="flex items-center justify-between">
+            <Link href="/" className="text-3xl font-bold text-gray-800 hover:text-gray-900 transition duration-300">
+              ArtVista
             </Link>
-            <Link href="/artists" className="text-amber-700 hover:text-amber-900 font-sans transition duration-300">
-              Artists
-            </Link>
-            <Link href="/exhibitions" className="text-amber-700 hover:text-amber-900 font-sans transition duration-300">
-              Exhibitions
-            </Link>
-            <Link href="/about" className="text-amber-700 hover:text-amber-900 font-sans transition duration-300">
-              About
-            </Link>
-          </div>
-          <div className="flex items-center space-x-4">
-            <Search className="w-5 h-5 text-amber-700 cursor-pointer hover:text-amber-900 transition duration-300" />
-            <ShoppingBag className="w-5 h-5 text-amber-700 cursor-pointer hover:text-amber-900 transition duration-300" />
-            <User className="w-5 h-5 text-amber-700 cursor-pointer hover:text-amber-900 transition duration-300" />
-            <Menu className="w-5 h-5 text-amber-700 cursor-pointer hover:text-amber-900 transition duration-300 md:hidden" />
+            <div className="hidden md:flex items-center space-x-8">
+              {['Gallery', 'Artists', 'Exhibitions', 'About'].map((item) => (
+                <Link key={item} href={`/${item.toLowerCase()}`} className="text-gray-600 hover:text-gray-900 font-medium transition duration-300">
+                  {item}
+                </Link>
+              ))}
+            </div>
+            <div className="flex items-center space-x-6">
+              <ShoppingCart className="w-6 h-6 text-gray-600 cursor-pointer hover:text-gray-900 transition duration-300" />
+              <UserCircle className="w-6 h-6 text-gray-600 cursor-pointer hover:text-gray-900 transition duration-300" />
+              <Menu className="w-6 h-6 text-gray-600 cursor-pointer hover:text-gray-900 transition duration-300 md:hidden" />
+            </div>
           </div>
         </div>
       </nav>
 
       {/* Hero Section */}
-      <section className="pt-20 md:pt-24 lg:pt-0 min-h-screen flex items-center justify-center">
-        <div className="container mx-auto px-4 flex flex-col lg:flex-row items-center justify-center">
-          <div className="lg:w-1/2 text-center lg:text-left mb-8 lg:mb-0 lg:pr-8">
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-amber-900 mb-4 sm:mb-6 font-playfair leading-tight">
-              Discover the Beauty of Fine Art
+      <section className="pt-24 md:pt-32 px-6 container mx-auto">
+        <div className="flex flex-col md:flex-row items-center justify-center gap-12">
+          <div className="md:w-1/2 space-y-8 text-center md:text-left">
+            <h1 className="text-4xl md:text-5xl font-extrabold text-gray-900 leading-tight">
+              Discover Art That Speaks to Your Soul
             </h1>
-            <p className="text-lg sm:text-xl md:text-2xl text-amber-800 mb-6 sm:mb-8 font-sans">
-              Explore our curated collection of timeless masterpieces and contemporary wonders.
+            <p className="text-lg text-gray-600 max-w-md mx-auto md:mx-0">
+              Immerse yourself in a world of creativity, from timeless masterpieces to cutting-edge contemporary works. Let ArtVista be your guide to the extraordinary.
             </p>
-            <Link
-              href="/gallery"
-              className="bg-gradient-to-r from-amber-600 to-orange-600 text-white px-6 sm:px-8 py-2 sm:py-3 rounded-full text-base sm:text-lg font-semibold hover:from-amber-700 hover:to-orange-700 transition duration-300 shadow-lg inline-block"
-            >
-              Explore Our Collection
-            </Link>
-          </div>
-          <div className="lg:w-1/2 w-full max-w-2xl lg:max-w-none mx-auto">
-            <div className="grid grid-cols-6 grid-rows-5 gap-2 sm:gap-4 h-[400px] sm:h-[500px] lg:h-[600px]">
-              <div className="col-span-4 row-span-3 relative group">
-                <div className="absolute inset-0 bg-amber-900 opacity-20 group-hover:opacity-10 transition-opacity duration-300 z-10 rounded-lg"></div>
-                <Image
-                  src="https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2045&q=80"
-                  alt="The Starry Night by Vincent van Gogh"
-                  layout="fill"
-                  objectFit="cover"
-                  className="rounded-lg shadow-2xl transition-transform duration-500 group-hover:scale-105"
-                />
-                <div className="absolute bottom-2 sm:bottom-4 left-2 sm:left-4 text-white z-20">
-                  <h3 className="text-base sm:text-xl font-bold font-playfair">The Starry Night</h3>
-                  <p className="text-xs sm:text-sm">Vincent van Gogh</p>
-                </div>
-              </div>
-              <div className="col-span-2 row-span-5 relative group">
-                <div className="absolute inset-0 bg-orange-900 opacity-20 group-hover:opacity-10 transition-opacity duration-300 z-10 rounded-lg"></div>
-                <Image
-                  src="https://images.unsplash.com/photo-1577083552431-6e5fd01aa342?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
-                  alt="Abstract Composition"
-                  layout="fill"
-                  objectFit="cover"
-                  className="rounded-lg shadow-2xl transition-transform duration-500 group-hover:scale-105"
-                />
-                <div className="absolute bottom-2 sm:bottom-4 left-2 sm:left-4 text-white z-20">
-                  <h3 className="text-base sm:text-xl font-bold font-playfair">Abstract Composition</h3>
-                  <p className="text-xs sm:text-sm">Modern Art Collection</p>
-                </div>
-              </div>
-              <div className="col-span-4 row-span-2 relative group">
-                <div className="absolute inset-0 bg-yellow-900 opacity-20 group-hover:opacity-10 transition-opacity duration-300 z-10 rounded-lg"></div>
-                <Image
-                  src="https://images.unsplash.com/photo-1578926288207-a90a5366759d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1776&q=80"
-                  alt="The Persistence of Memory by Salvador Dalí"
-                  layout="fill"
-                  objectFit="cover"
-                  className="rounded-lg shadow-2xl transition-transform duration-500 group-hover:scale-105"
-                />
-                <div className="absolute bottom-2 sm:bottom-4 left-2 sm:left-4 text-white z-20">
-                  <h3 className="text-base sm:text-xl font-bold font-playfair">The Persistence of Memory</h3>
-                  <p className="text-xs sm:text-sm">Salvador Dalí</p>
-                </div>
-              </div>
+            <div className="flex justify-center md:justify-start space-x-4">
+              <Link
+                href="/gallery"
+                className="inline-block bg-gray-900 text-white px-8 py-3 rounded-full text-lg font-semibold hover:bg-gray-800 transition duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+              >
+                Explore Gallery
+              </Link>
+              <Link
+                href="/artists"
+                className="inline-block bg-white text-gray-900 border-2 border-gray-900 px-8 py-3 rounded-full text-lg font-semibold hover:bg-gray-100 transition duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+              >
+                Meet Artists
+              </Link>
             </div>
+          </div>
+          <div className="md:w-1/2 relative h-[500px] w-full overflow-hidden rounded-2xl shadow-2xl">
+            {images.map((image, index) => (
+              <div
+                key={index}
+                className={`absolute inset-0 transition-opacity duration-1000 ${
+                  index === activeImageIndex 
+                    ? 'fade-out-left' 
+                    : index === nextImageIndex
+                      ? 'fade-in-right'
+                      : 'opacity-0'
+                }`}
+              >
+                <Image
+                  src={image.src}
+                  alt={image.alt}
+                  layout="fill"
+                  objectFit="cover"
+                />
+                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-4">
+                  <h3 className="text-lg font-bold text-white">{image.title}</h3>
+                  <p className="text-xs mt-1 text-gray-300">Explore {image.alt} Art</p>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
     </div>
-  )
+  );
 }
-
